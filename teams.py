@@ -57,9 +57,8 @@ class Teams:
       type=""
       for team in self.teams:
        if team.get_id()==int(filter):
-           print(team.get_type())
            type= team.set_type(updatetype)
-           print(team.get_type())
+           print("Team type sucessfully updated to : " + team.get_type())
       return type
 
      # # return the team object which needed  to be  update with fee paid status

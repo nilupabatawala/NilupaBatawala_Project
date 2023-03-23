@@ -150,13 +150,16 @@ class UserInterface:
         if not teams:
             teams = self.teams.teams
             totalteams=len(teams)
+            print("----------------------------------------------------------")
             print("Total Teams registered in  the system: " + str(totalteams))
+            print("-----------------------------------------------------------")
             teamstotalcount = self.teams.check_fee_paid_team_count(filter)
             try:
                 percenatge=(teamstotalcount/totalteams)*100
                 percent=round(percenatge,2)
            
                 print("Percentage of teams paid fees: " + str(percent)+' %')
+                print("-----------------------------------------------------------")
             except:
                 print("No sufficent data available in the system to generate the report")
 
@@ -264,7 +267,9 @@ class UserInterface:
             print("Team information already loaded to  the system")
 
         
-    # this function is called to exit from the  system
+    # this function is called to exit from the system
     def exit(self):
-      print("Thank you for using Youth Hockey Cup Team Management System")
-      sys.exit(0)
+        print("-----------------------------------------------------------")
+        print("Thank you for using Youth Hockey Cup Team Management System")
+        print("-----------------------------------------------------------")
+        sys.exit(0)
