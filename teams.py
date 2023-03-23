@@ -2,7 +2,7 @@ from team import Team
 
 class Teams:
 
-    #initialize teamslist
+    #initialize teams list
     def __init__(self):
         self.teams = []
         
