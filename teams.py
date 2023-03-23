@@ -1,13 +1,18 @@
 from team import Team
 
 class Teams:
+   
     def __init__(self):
         self.teams = []
         
 
-    def new_team(self,name, teamtype, fee_paid, fee):
+    def create_new_team(self,name, teamtype, fee_paid, fee):
        
        self.teams.append(Team(name, teamtype, fee_paid,fee))    
+    
+    def retrieve_team(self,name, type, fee_paid,fee,cancel_date,id,date,):
+       
+       self.teams.append(Team(name, type, fee_paid,fee,cancel_date,id,date))  
     
     def search_team(self, filter):
 
@@ -21,10 +26,7 @@ class Teams:
 
       return [ team for team in self.teams if team.get_id()==int(filter)]
     
-    def search_team_by_cancellatio_date(self,filter):
-     
-      return [ team for team in self.teams if team.get_cancel_date()!=filter]
-    
+           
     def delete_team_by_id(self,delteam):
 
       self.teams.remove(delteam)
@@ -32,14 +34,14 @@ class Teams:
     def check_fee_paid_team_count(self,filter):
       total=0
       for team in self.teams:
-        if team.get_fee_paid()==filter:
-            total+=1      
+         if team.get_fee_paid()==filter:
+              total +=1      
       return total
 
     def upate_team_by_name(self,filter,updatename):
       name=""
       for team in self.teams:
-       if team.get_id()==int(filter):
+       if team.get_id()==filter:
            print(team.get_id())
            name= team.set_name(updatename)
            print(team.get_name())
@@ -48,7 +50,7 @@ class Teams:
     def upate_team_by_type(self,filter,updatetype):
       type=""
       for team in self.teams:
-       if team.get_id()==int(filter):
+       if team.get_id()==filter:
            print(team.get_type())
            type= team.set_type(updatetype)
            print(team.get_type())
@@ -57,7 +59,7 @@ class Teams:
     def upate_team_by_fee_paid(self,filter,updatefeepaid):
       feepaid=""
       for team in self.teams:
-       if team.get_id()==int(filter):
+       if team.get_id()==filter:
            print(team.get_fee_paid())
            feepaid= team.set_fee_paid(updatefeepaid)
            print(team.get_fee_paid())
@@ -66,7 +68,7 @@ class Teams:
     def upate_team_by_fee(self,filter,updatefee):
       fee=""
       for team in self.teams:
-       if team.get_id()==int(filter):
+       if team.get_id()==filter:
            print(team.get_fee())
            fee= team.set_fee(updatefee)
            print(team.get_fee())
@@ -75,7 +77,7 @@ class Teams:
     def upate_team_by_cancel_date(self,filter,updatecanceldate):
       canceldate=""
       for team in self.teams:
-       if team.get_id()==int(filter):
+       if team.get_id()==filter:
            print(team.get_cancel_date())
            canceldate= team.set_cancel_date(updatecanceldate)
            print(team.get_cancel_date())

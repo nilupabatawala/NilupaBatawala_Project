@@ -4,9 +4,16 @@ class Team:
     
     #count= 1000
 
-    def __init__(self, name, type, fee_paid, fee, cancel_date="0000-00-00"):
-        self.__id = self.id_generator()
-        self.__date = datetime.date.today() 
+    def __init__(self, name, type, fee_paid, fee, cancel_date="0000-00-00",id=0,date="0000-00-00"):
+        if id ==0:
+            self.__id = self.id_generator()
+        else:
+            self.__id=id
+        
+        if date=="0000-00-00":
+            self.__date = datetime.date.today()
+        else:
+            self.__date=date
         self.__name = name
         self.__type = type
         self.__fee_paid= fee_paid
@@ -32,14 +39,14 @@ class Team:
     def id_generator(self):
         with open("id.txt", "r") as f:
             f.seek(0)
-            fc = f.read(1)
+            fc = f.readline()
             if not fc:
                 with open("id.txt", "w") as f1:
                     f1.write("1")
                 self.id = 1
             else:
                 f.seek(0)
-                fc = f.read(1)
+                fc = f.readline()
                 nv = int(fc) + 1
                 with open("id.txt", "w") as f2:
                     f2.write(str(nv))
@@ -88,7 +95,7 @@ class Team:
     
      # getter method to get id
     def get_id(self):
-        return self.__id
+        return int(self.__id)
     
     # getter method to get date
     def get_date(self):
