@@ -1,6 +1,5 @@
 import sys
 from teams import Teams
-import pickle
 
 
 class UserInterface:
@@ -8,7 +7,7 @@ class UserInterface:
     flag=0
     def __init__(self):
       
-      # instantiate new object of Teams Class
+      # instantiate a new object of Teams Class
       self.teams = Teams()
 
       #define menu options
@@ -27,7 +26,7 @@ class UserInterface:
       }
 
         
-    #function to print main menu
+    #this function prints main menu
     def main_menu(self):
 
          print("""================================"\n
@@ -49,8 +48,11 @@ class UserInterface:
 
     # run function which invoke main menu
     def run(self):
+        print("+++++++++++++++++++++++++++++++++++++++++++++++++++")
         print("Welcome to Youth Hockey Cup Team Management System")
-       # self.retrieve_team_info()
+        print("+++++++++++++++++++++++++++++++++++++++++++++++++++\n")
+
+        print("Please select option 10 to load the registered team information to the system\n")
         
         while (True):
 
@@ -69,7 +71,7 @@ class UserInterface:
             else:
                 print("Invalid entry")
             
-    
+    # this function is called to create a new team object
     def create_team(self):
        
         name = input("Enter team name:  " )
@@ -100,6 +102,7 @@ class UserInterface:
 
         print("Team sucessfully created in the system")
 
+     #this function is called to delete team by its id
     def delete_team(self):
         filter = input("Enter ID to Delete:  ")
         delteam = self.teams.search_team_by_id(filter)
@@ -112,18 +115,19 @@ class UserInterface:
                 self.teams.delete_team_by_id(team)
                 print("Team Sucessfully deleted")
 
+    #this function is called to retrieve teams by its id
     def search_by_id(self):
         filter = input("Enter ID:  ")
         teams = self.teams.search_team_by_id(filter)
-        print(teams)
         for team in teams:
             if team == None:
                 print("No ID found")
             else:
                 print(team) 
-    
+
+    #this function is called to retrieve teams by its type 
     def search_by_type(self):
-        filter = input("Enter Type:  ")
+        filter = input("Enter Type: [boys/girls] ")
         teams = self.teams.search_team_by_type(filter)
         for team in teams:
             if team == None:
@@ -131,9 +135,8 @@ class UserInterface:
             else:
                 print(team) 
 
+    # this unction is called to reteive all the teams loaded in the memory
     def show_all_teams(self, teams=None):
-   
-
         if not teams:
             teams = self.teams.teams
             for team in teams:
@@ -141,7 +144,7 @@ class UserInterface:
         else:
             print("There is no teams registered in the system")
 
-   
+    # this function is called to retrieve total teams registered in the system and the get percentage of teams who have paid
     def team_summary(self, teams=None):
         filter="Y"
         if not teams:
@@ -151,11 +154,13 @@ class UserInterface:
             teamstotalcount = self.teams.check_fee_paid_team_count(filter)
             try:
                 percenatge=(teamstotalcount/totalteams)*100
+                percent=round(percenatge,2)
            
-                print("Percentage of teams paid fees: " + str(percenatge)+' %')
+                print("Percentage of teams paid fees: " + str(percent)+' %')
             except:
                 print("No sufficent data available in the system to generate the report")
-       
+
+     # this function is called to modify team object ptoperties name,type, fee paid status and fee
     def update_teams(self):
         filter = input("Enter ID to  update:  ")
         teams = self.teams.search_team_by_id(filter)
@@ -188,10 +193,10 @@ class UserInterface:
                         self.teams.upate_team_by_fee_paid(filter,updatefee_paid)
                         print("Team fee paid status updated sucessfully")
     
+    # this function is called to update the cancellationdate of the team object
     def update_cancellation(self):
         filter = input("Enter ID to  update cancellation date:  ")
         teams = self.teams.search_team_by_id(filter)
-        print(teams)
         for team in teams:
             confirm=input("Are you sure you want to update Team   [Y/N]   ?  ")
             if (confirm == 'Y'):
@@ -205,12 +210,12 @@ class UserInterface:
                     
             print("Team Sucessfully update with cancellationdate")
 
+    # this function will dump all the registered team in the memory to backup_team.txt file
     def backup_team_info(self, teams=None):
-        file_name = 'backup_team1.txt'
+        file_name = 'backup_team.txt'
         if not teams:
             teams = self.teams.teams
             with open(file_name, 'wb') as file:
-           # bkp= self.teams.backup_team_info
                 
                 for team in teams:
                     id=team.get_id()
@@ -220,33 +225,25 @@ class UserInterface:
                     fee= team.get_fee()
                     fee_paid= team.get_fee_paid()
                     cancel_date= team.get_cancel_date()
-                    #pickle.dump(teams, file)
+                  
                     team_str= str(id) + "," + str(date) + "," + str(name) + ","+ str(type) + "," + str(fee_paid) + "," + str(fee)+ "," + str(cancel_date)
                     if team_str !="":
                         newline="\n"
                         file.write(team_str.encode())
                         file.write(newline.encode())
-                print(f'Object successfully saved to "{file_name}"')
+                print(f'All teams successfully saved to "{file_name}"')
 
             file.close()
     
-    #def retrieve_team_info(self,  teams=None):
-        # open a file, where you stored the pickled data
-    #    file = open('backup_team.txt', 'rb')
-    #    if not teams:
-    #        teams=pickle.load(file)
-    #        for team in teams:
-    #            print(team)
-    #            self.teams.teams.append(team)
-    #    file.close()
-               
+    # this function is called to reterieve team records from txt file         
     def retrieve_team_info(self,  teams=None):
+        # this flag is used to keep track of retriving data from txt file
         if self.flag == 0:
-            with open("backup_team1.txt", "r") as filestream:
+            # read the backup_team.txt file and load it to the memory
+            with open("backup_team.txt", "r") as filestream:
                 for line in filestream:
                     currentline = line.split(",")
                     if not currentline:
-                    ##total = str(int(currentline[0]) + int(currentline[1]) + int(currentline [2])) + "\n"
                         print("no records to load")
                     else:
                         try:
@@ -267,7 +264,7 @@ class UserInterface:
             print("Team information already loaded to  the system")
 
         
-
+    # this function is called to exit from the  system
     def exit(self):
       print("Thank you for using Youth Hockey Cup Team Management System")
       sys.exit(0)
