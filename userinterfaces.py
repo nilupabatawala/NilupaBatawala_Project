@@ -212,8 +212,7 @@ class UserInterface:
 
                     
             print("Team Sucessfully update with cancellationdate")
-
-    # this function will dump all the registered team in the memory to backup_team.txt file
+     # this function will dump all the registered team in the memory to backup_team.txt file
     def backup_team_info(self, teams=None):
         file_name = 'backup_team.txt'
         if not teams:
@@ -239,7 +238,7 @@ class UserInterface:
             file.close()
     
     # this function is called to reterieve team records from txt file         
-    def retrieve_team_info(self,  teams=None):
+    def retrieve_team_info(self):
         # this flag is used to keep track of retriving data from txt file
         if self.flag == 0:
             # read the backup_team.txt file and load it to the memory
@@ -265,7 +264,7 @@ class UserInterface:
             self.flag=1
         else:
             print("Team information already loaded to  the system")
-
+   
         
     # this function is called to exit from the system
     def exit(self):

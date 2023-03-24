@@ -87,8 +87,3 @@ class Teams:
            canceldate= team.set_cancel_date(updatecanceldate)
            print("Cancellation date sucessfully updated to : " + team.get_cancel_date())
       return canceldate
-    
-    # returns team object list when backup_team_info function is called
-    def backup_team_info(self):
-      for team in self.teams:
-        return team

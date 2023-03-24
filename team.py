@@ -2,6 +2,7 @@ import datetime
 
 class Team:
     
+    
     # init menthod accepts four mandatory parameters  name,type,fee_paid,fee and two optional parameters id and date
     def __init__(self, name, type, fee_paid, fee, cancel_date="0000-00-00",id=0,date="0000-00-00"):
         
