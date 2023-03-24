@@ -99,9 +99,9 @@ class UserInterface:
         with open('id.txt') as f:
             lines = f.readlines()
 
-        print("+++++++++++++++++++++++++++++++++++++++")
+        print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         print("Team sucessfully created in the system with ID : " + str(lines))
-        print("++++++++++++++++++++++++++++++++++++++")
+        print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         
 
      #this function is called to delete team by its id
