@@ -10,6 +10,7 @@ class Teams:
     def create_new_team(self,name, teamtype, fee_paid, fee):
        
        self.teams.append(Team(name, teamtype, fee_paid,fee))    
+       
     
     # retrieved team records fromtxt file will be loaded as team objects to teams list
     def retrieve_team(self,name, type, fee_paid,fee,cancel_date,id,date,):

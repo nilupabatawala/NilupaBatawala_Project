@@ -92,48 +92,66 @@ class UserInterface:
                 fee = float(fee)       
                 break;
             except ValueError:
-                try:
-                    float(fee)
-                    break;
-                except ValueError:
-                    print("This is not a number. Please enter a valid number")
+                print("Invalid entry")
         
         self.teams.create_new_team(name, teamtype, fee_paid, fee)
 
-        print("Team sucessfully created in the system")
+        with open('id.txt') as f:
+            lines = f.readlines()
+
+        print("+++++++++++++++++++++++++++++++++++++++")
+        print("Team sucessfully created in the system with ID : " + str(lines))
+        print("++++++++++++++++++++++++++++++++++++++")
+        
 
      #this function is called to delete team by its id
     def delete_team(self):
-        filter = input("Enter ID to Delete:  ")
-        delteam = self.teams.search_team_by_id(filter)
+
+            filter = input("Enter ID to Delete:  ")
+            try:
+                filter =  int(filter)
+                delteam = self.teams.search_team_by_id(filter)
         
-        for team in delteam:
-            confirm=input("Are you sure you want to delete Team   [Y/N]   ?")
-            if (confirm == 'Y'):
+                for team in delteam:
+                    confirm=input("Are you sure you want to delete Team   [Y/N]   ?")
+                    if (confirm == 'Y'):
 
-                print(team.get_name()," will be deleted") 
-                self.teams.delete_team_by_id(team)
-                print("Team Sucessfully deleted")
+                        print(team.get_name()," will be deleted") 
+                        self.teams.delete_team_by_id(team)
+                        print("Team Sucessfully deleted")
 
+            except ValueError:
+                print("Incorrect ID entered. Please enter a valid ID")
+        
+          
     #this function is called to retrieve teams by its id
     def search_by_id(self):
         filter = input("Enter ID:  ")
-        teams = self.teams.search_team_by_id(filter)
-        for team in teams:
-            if team == None:
-                print("No ID found")
-            else:
-                print(team) 
+        try:
+            filter =  int(filter)
+            teams = self.teams.search_team_by_id(filter)
+            for team in teams:
+                if team == None:
+                    print("No ID found")
+                else:
+                    print(team) 
+        except ValueError:
+            print("Incorrect ID entered. Please enter a valid ID")
+        
+        
 
     #this function is called to retrieve teams by its type 
     def search_by_type(self):
         filter = input("Enter Type: [boys/girls] ")
-        teams = self.teams.search_team_by_type(filter)
-        for team in teams:
-            if team == None:
-                print("No ID found")
-            else:
-                print(team) 
+        try:
+            teams = self.teams.search_team_by_type(filter)
+            for team in teams:
+                if team == None:
+                    print("No ID found")
+                else:
+                    print(team)
+        except:
+             print("Incorrect ID entered. Please enter a valid ID")
 
     # this unction is called to reteive all the teams loaded in the memory
     def show_all_teams(self, teams=None):
@@ -166,52 +184,63 @@ class UserInterface:
      # this function is called to modify team object ptoperties name,type, fee paid status and fee
     def update_teams(self):
         filter = input("Enter ID to  update:  ")
-        teams = self.teams.search_team_by_id(filter)
-        for team in teams:
-            confirm=input("Are you sure you want to update Team   [Y/N]   ?  ")
-            if (confirm == 'Y'):
-                    print("Here is the current details of the system")
-                    print(team)
-                    newname=input("Do you want to update the name  [Y/N]  ?  ")
-                    if (newname =='Y'):
-                        updatename= input("Enter Name to update ?   ")
-                        self.teams.upate_team_by_name(filter,updatename)
-                        print("Team name updated sucessfully")
+        try:
+            filter =  int(filter)
+            teams = self.teams.search_team_by_id(filter)
+            for team in teams:
+                confirm=input("Are you sure you want to update Team   [Y/N]   ?  ")
+                if (confirm == 'Y'):
+                        print("Here is the current details of the system")
+                        print(team)
+                        newname=input("Do you want to update the name  [Y/N]  ?  ")
+                        if (newname =='Y'):
+                            updatename= input("Enter Name to update ?   ")
+                            self.teams.upate_team_by_name(filter,updatename)
+                            print("Team name updated sucessfully")
 
-                    newtype=input("Do you want to change the type [Y/N]?  ")
-                    if (newtype == 'Y'):
-                        updatetype= input("Enter new type [boys/girls] ?  ")
-                        self.teams.upate_team_by_type(filter,updatetype)
-                        print("Team type updated sucessfully")
+                        newtype=input("Do you want to change the type [Y/N]?  ")
+                        if (newtype == 'Y'):
+                            updatetype= input("Enter new type [boys/girls] ?  ")
+                            self.teams.upate_team_by_type(filter,updatetype)
+                            print("Team type updated sucessfully")
                 
-                    newfee=input("Do you want to change the fee  [Y/N] ?  ")
-                    if (newfee == 'Y'):
-                        updatefee= input("Enter new fee amount ?  ")
-                        self.teams.upate_team_by_fee(filter,updatefee)
-                        print("Team fee  updated sucessfully")
+                        newfee=input("Do you want to change the fee  [Y/N] ?  ")
+                        if (newfee == 'Y'):
+                            updatefee= input("Enter new fee amount ?  ")
+                            self.teams.upate_team_by_fee(filter,updatefee)
+                            print("Team fee  updated sucessfully")
 
-                    newfee_paid=input("Do you want to change Fee Paid Status [Y/N]  ?  ")
-                    if (newfee_paid == 'Y'):
-                        updatefee_paid= input("Enter new Fee paid status [Y/N]  ?  ")
-                        self.teams.upate_team_by_fee_paid(filter,updatefee_paid)
-                        print("Team fee paid status updated sucessfully")
+                        newfee_paid=input("Do you want to change Fee Paid Status [Y/N]  ?  ")
+                        if (newfee_paid == 'Y'):
+                            updatefee_paid= input("Enter new Fee paid status [Y/N]  ?  ")
+                            self.teams.upate_team_by_fee_paid(filter,updatefee_paid)
+                            print("Team fee paid status updated sucessfully")
+        except ValueError:
+            print("This is not a ID. Please enter a valid ID")
+        
     
     # this function is called to update the cancellationdate of the team object
     def update_cancellation(self):
+       
         filter = input("Enter ID to  update cancellation date:  ")
-        teams = self.teams.search_team_by_id(filter)
-        for team in teams:
-            confirm=input("Are you sure you want to update Team   [Y/N]   ?  ")
-            if (confirm == 'Y'):
+        try:
+            filter =  int(filter)
+            teams = self.teams.search_team_by_id(filter)
+            for team in teams:
+                confirm=input("Are you sure you want to update Team   [Y/N]   ?  ")
+                if (confirm == 'Y'):
                     print("Here is the current details of the system")
                     print(team)
                     cdate=input("Do you want to update cancellation date [Y/N]  ?  ")
                     if (cdate =='Y'):
                         updatecdate= input("Enter cancellation date ? [YYYY-MM-DD]   ")
                         self.teams.upate_team_by_cancel_date(filter,updatecdate)
+                        print("Team Sucessfully update with cancellationdate")
+        except:
+            print("This is not a ID. Please enter a valid ID")
 
                     
-            print("Team Sucessfully update with cancellationdate")
+            
      # this function will dump all the registered team in the memory to backup_team.txt file
     def backup_team_info(self, teams=None):
         file_name = 'backup_team.txt'
